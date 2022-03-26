@@ -1,32 +1,31 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        List<Integer> ds = new ArrayList<Integer>();
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> choice = new ArrayList<>();
         boolean[] flag = new boolean[nums.length];
-        repeatPermute(nums,ds,flag,result);
+        findPerm(nums,choice,result,flag);
         return result;
-        
     }
-    public static void repeatPermute(int[] nums, List<Integer> ds, boolean[] flag,List<List<Integer>> result)
+    public static void findPerm(int[] nums,List<Integer> choice,List<List<Integer>> result, boolean[] flag)
     {
-        if(ds.size() == nums.length)
+        if(choice.size() == nums.length)
         {
-            result.add(new ArrayList<>(ds));
+            result.add(new ArrayList<>(choice));
             return;
         }
-        else
+        for(int i=0; i<nums.length; i++)
         {
-            for(int i=0; i<nums.length; i++)
+            if(flag[i]==false)
             {
-                if(flag[i] == false)
-                {
-                    flag[i] = true;
-                    ds.add(nums[i]);
-                    repeatPermute(nums,ds,flag,result);
-                    ds.remove(ds.size()-1);
-                    flag[i] = false;
-                }
+                flag[i] = true;
+                choice.add(nums[i]);
+                findPerm(nums,choice,result,flag);
+                choice.remove(choice.size()-1);
+                flag[i] = false;
             }
+            
         }
+        
+        
     }
 }
